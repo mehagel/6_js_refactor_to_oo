@@ -1,13 +1,37 @@
 $(document).ready(function() {
-  $('#roller button.add').on('click', function() {
-    console.log("WAT")
-    $('.dice').append('<div class="die">0</div>');
-  });
+  var die = Die();
+  die.init();
+});
 
-  $('#roller button.roll').on('click', function() {
-    $('.die').each(function(k, die) {
+var Die = function(){
+  var self = {
+    rollSelector: '.roll',
+    diceSelector: '.dice',
+    dieHtml: '<div class="die">0</div>',
+    dieSelector: '.die'
+  };
+
+  self.init = function(){
+    $('.add').on('click',function(){
+      addDie();
+    });
+
+    $(self.rollSelector).on('click', function(){
+      rollDie();
+    })
+  };
+
+  addDie = function(){
+    $(self.diceSelector).append(self.dieHtml);
+  };
+
+  rollDie = function(){
+    $(self.dieSelector).each(function(k, die) {
       var value = Math.floor((Math.random()*6)+1);
       $(die).text(value);
     });
-  });
-});
+  };
+
+  return self;
+
+};
